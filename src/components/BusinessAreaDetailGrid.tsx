@@ -1,4 +1,5 @@
-import { Activity, CheckCircle2, PlayCircle, AlertTriangle, XCircle, BarChart3 } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { Activity, CheckCircle2, PlayCircle, AlertTriangle, XCircle, BarChart3, ChevronDown, ChevronRight } from 'lucide-react';
 import { ActivityDefinition, ActivityStatus } from '../services/mockApi';
 import { Badge } from './ui/badge';
 
@@ -19,7 +20,32 @@ export function BusinessAreaDetailGrid({
 }: BusinessAreaDetailGridProps) {
   // Get all apps for this business area
   const businessAreaDefs = definitions.filter((def) => def.businessArea === businessArea);
-  const appIds = [...new Set(businessAreaDefs.map((def) => def.appId))].sort();
+  const appIds = useMemo(
+    () => [...new Set(businessAreaDefs.map((def) => def.appId))].sort(),
+    [businessArea, definitions]
+  );
+
+  // State to track which apps are expanded (all expanded by default)
+  const [expandedApps, setExpandedApps] = useState<Set<string>>(() => new Set(appIds));
+
+  // Reset expanded apps when business area changes
+  useEffect(() => {
+    setExpandedApps(new Set(appIds));
+  }, [businessArea]);
+
+  const toggleApp = (appId: string) => {
+    setExpandedApps((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(appId)) {
+        newSet.delete(appId);
+      } else {
+        newSet.add(appId);
+      }
+      return newSet;
+    });
+  };
+
+  const isExpanded = (appId: string) => expandedApps.has(appId);
 
   const getActivityStatus = (activityId: string) => {
     return statuses.find((s) => s.activityId === activityId);
@@ -74,9 +100,25 @@ export function BusinessAreaDetailGrid({
 
             return (
               <div key={appId} className="border border-border rounded-lg overflow-hidden">
-                <div className="bg-muted/50 px-4 py-3 border-b border-border">
+                <div 
+                  className="bg-muted/50 px-4 py-3 border-b border-border cursor-pointer hover:bg-muted/70 transition-colors"
+                  onClick={() => toggleApp(appId)}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
+                      <button
+                        className="p-0 hover:bg-transparent"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleApp(appId);
+                        }}
+                      >
+                        {isExpanded(appId) ? (
+                          <ChevronDown className="size-5 text-muted-foreground" />
+                        ) : (
+                          <ChevronRight className="size-5 text-muted-foreground" />
+                        )}
+                      </button>
                       <Activity className="size-5 text-primary" />
                       <div>
                         <h4 className="text-card-foreground">{appId}</h4>
@@ -103,7 +145,13 @@ export function BusinessAreaDetailGrid({
                         </div>
                       )}
                       {onViewAppTrends && (
-                        <div className="flex items-center gap-1 cursor-pointer" onClick={() => onViewAppTrends(appId)}>
+                        <div 
+                          className="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors" 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onViewAppTrends(appId);
+                          }}
+                        >
                           <BarChart3 className="size-4 text-blue-600 dark:text-blue-500" />
                           <span className="text-sm text-card-foreground">Trends</span>
                         </div>
@@ -112,73 +160,75 @@ export function BusinessAreaDetailGrid({
                   </div>
                 </div>
 
-                <div className="p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {appActivities.map((activity) => {
-                      const status = getActivityStatus(activity.activityId);
-                      return (
-                        <div
-                          key={activity.activityId}
-                          className="border border-border rounded-lg p-3 bg-card hover:shadow-md transition-shadow"
-                        >
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs text-muted-foreground">
-                                  {activity.activityId}
-                                </span>
-                                <Badge className={`text-xs ${getActivityTypeColor(activity.activityType)}`}>
-                                  {activity.activityType}
-                                </Badge>
+                {isExpanded(appId) && (
+                  <div className="p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {appActivities.map((activity) => {
+                        const status = getActivityStatus(activity.activityId);
+                        return (
+                          <div
+                            key={activity.activityId}
+                            className="border border-border rounded-lg p-3 bg-card hover:shadow-md transition-shadow"
+                          >
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="text-xs text-muted-foreground">
+                                    {activity.activityId}
+                                  </span>
+                                  <Badge className={`text-xs ${getActivityTypeColor(activity.activityType)}`}>
+                                    {activity.activityType}
+                                  </Badge>
+                                </div>
+                                <p className="text-sm text-card-foreground">{activity.activityName}</p>
                               </div>
-                              <p className="text-sm text-card-foreground">{activity.activityName}</p>
+                              {status && (
+                                <div className="ml-2">
+                                  {status.activityStatus === 'RUNNING' ? (
+                                    <PlayCircle className="size-4 text-blue-600 dark:text-blue-500 animate-pulse" />
+                                  ) : (
+                                    getSLAStatusIcon(status.slaStatus)
+                                  )}
+                                </div>
+                              )}
                             </div>
-                            {status && (
-                              <div className="ml-2">
-                                {status.activityStatus === 'RUNNING' ? (
-                                  <PlayCircle className="size-4 text-blue-600 dark:text-blue-500 animate-pulse" />
-                                ) : (
-                                  getSLAStatusIcon(status.slaStatus)
-                                )}
-                              </div>
-                            )}
-                          </div>
 
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between text-xs">
-                              <span className="text-muted-foreground">Expected:</span>
-                              <span className="text-card-foreground">
-                                {activity.expectedStartTime} - {activity.expectedEndTime}
-                              </span>
-                            </div>
-                            {status && status.reportingTime && (
+                            <div className="space-y-1">
                               <div className="flex items-center justify-between text-xs">
-                                <span className="text-muted-foreground">Reported:</span>
+                                <span className="text-muted-foreground">Expected:</span>
                                 <span className="text-card-foreground">
-                                  {new Date(status.reportingTime).toLocaleTimeString()}
+                                  {activity.expectedStartTime} - {activity.expectedEndTime}
                                 </span>
                               </div>
-                            )}
-                            {status && (
-                              <div className="flex items-center justify-between text-xs pt-1 border-t border-border">
-                                <span className="text-muted-foreground">Status:</span>
-                                <Badge variant={status.activityStatus === 'RUNNING' ? 'default' : 'secondary'} className="text-xs">
-                                  {status.activityStatus}
-                                </Badge>
-                              </div>
-                            )}
-                            {onViewActivityTrends && (
-                              <div className="flex items-center justify-between text-xs pt-1 border-t border-border cursor-pointer" onClick={() => onViewActivityTrends(activity.activityId, activity.activityName)}>
-                                <span className="text-muted-foreground">Trends:</span>
-                                <BarChart3 className="size-4 text-blue-600 dark:text-blue-500" />
-                              </div>
-                            )}
+                              {status && status.reportingTime && (
+                                <div className="flex items-center justify-between text-xs">
+                                  <span className="text-muted-foreground">Reported:</span>
+                                  <span className="text-card-foreground">
+                                    {new Date(status.reportingTime).toLocaleTimeString()}
+                                  </span>
+                                </div>
+                              )}
+                              {status && (
+                                <div className="flex items-center justify-between text-xs pt-1 border-t border-border">
+                                  <span className="text-muted-foreground">Status:</span>
+                                  <Badge variant={status.activityStatus === 'RUNNING' ? 'default' : 'secondary'} className="text-xs">
+                                    {status.activityStatus}
+                                  </Badge>
+                                </div>
+                              )}
+                              {onViewActivityTrends && (
+                                <div className="flex items-center justify-between text-xs pt-1 border-t border-border cursor-pointer" onClick={() => onViewActivityTrends(activity.activityId, activity.activityName)}>
+                                  <span className="text-muted-foreground">Trends:</span>
+                                  <BarChart3 className="size-4 text-blue-600 dark:text-blue-500" />
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             );
           })}

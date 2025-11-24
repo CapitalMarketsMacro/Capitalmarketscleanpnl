@@ -964,6 +964,10 @@
     stroke: var(--muted);
   }
 
+  .p-0 {
+    padding: calc(var(--spacing) * 0);
+  }
+
   .p-3 {
     padding: calc(var(--spacing) * 3);
   }
@@ -1263,6 +1267,18 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-muted\/70:hover {
+      background-color: var(--muted);
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:bg-muted\/70:hover {
+        background-color: color-mix(in oklab, var(--muted) 70%, transparent);
+      }
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:bg-primary\/20:hover {
       background-color: var(--primary);
     }
@@ -1299,8 +1315,20 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-transparent:hover {
+      background-color: #0000;
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:text-accent-foreground:hover {
       color: var(--accent-foreground);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-primary:hover {
+      color: var(--primary);
     }
   }
 
