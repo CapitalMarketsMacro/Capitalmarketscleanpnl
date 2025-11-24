@@ -1,0 +1,191 @@
+{
+  "statuses": [
+    {
+      "id": {
+        "timestamp": 1763643969,
+        "date": "2025-11-20T13:06:09.000+00:00"
+      },
+      "appId": "1COM",
+      "businessStepID": "Trade.PD",
+      "activityId": "1COM-01",
+      "activityType": "TRADE",
+      "activityDescription": "EOD Trade Snapshot (T-1)",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T03:10:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "COMMS"
+    },
+    {
+      "id": {
+        "timestamp": 1763643970,
+        "date": "2025-11-20T13:06:10.000+00:00"
+      },
+      "appId": "1COM",
+      "businessStepID": "Risk.Calc",
+      "activityId": "1COM-02",
+      "activityType": "RISK",
+      "activityDescription": "Risk Calculation",
+      "activityStatus": "RUNNING",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T03:15:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "COMMS"
+    },
+    {
+      "id": {
+        "timestamp": 1763643971,
+        "date": "2025-11-20T13:06:11.000+00:00"
+      },
+      "appId": "2COM",
+      "businessStepID": "Market.Feed",
+      "activityId": "2COM-01",
+      "activityType": "MARKET_DATA",
+      "activityDescription": "Market Data Feed",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T02:50:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_VIOLATION_MISSED_WINDOW",
+      "businessArea": "COMMS"
+    },
+    {
+      "id": {
+        "timestamp": 1763643972,
+        "date": "2025-11-20T13:06:12.000+00:00"
+      },
+      "appId": "1FX",
+      "businessStepID": "Trade.Process",
+      "activityId": "1FX-01",
+      "activityType": "TRADE",
+      "activityDescription": "FX Trade Processing",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T02:30:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "FX"
+    },
+    {
+      "id": {
+        "timestamp": 1763643973,
+        "date": "2025-11-20T13:06:13.000+00:00"
+      },
+      "appId": "1FX",
+      "businessStepID": "PnL.Calc",
+      "activityId": "1FX-02",
+      "activityType": "PNL",
+      "activityDescription": "FX PnL Calculation",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T02:45:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "FX"
+    },
+    {
+      "id": {
+        "timestamp": 1763643974,
+        "date": "2025-11-20T13:06:14.000+00:00"
+      },
+      "appId": "2FX",
+      "businessStepID": "Price.Feed",
+      "activityId": "2FX-01",
+      "activityType": "PRICE",
+      "activityDescription": "FX Price Feed",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T02:20:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "FX"
+    },
+    {
+      "id": {
+        "timestamp": 1763643975,
+        "date": "2025-11-20T13:06:15.000+00:00"
+      },
+      "appId": "1RATES",
+      "businessStepID": "Trade.Snap",
+      "activityId": "1RATES-01",
+      "activityType": "TRADE",
+      "activityDescription": "Rates Trade Snapshot",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T02:00:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "RATES"
+    },
+    {
+      "id": {
+        "timestamp": 1763643976,
+        "date": "2025-11-20T13:06:16.000+00:00"
+      },
+      "appId": "1RATES",
+      "businessStepID": "Position.Update",
+      "activityId": "1RATES-02",
+      "activityType": "POSITION",
+      "activityDescription": "Rates Position Update",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T02:35:00Z",
+      "runId": "002",
+      "slaStatus": "SLA_VIOLATION_DUPLICATION",
+      "businessArea": "RATES"
+    },
+    {
+      "id": {
+        "timestamp": 1763643977,
+        "date": "2025-11-20T13:06:17.000+00:00"
+      },
+      "appId": "1EQ",
+      "businessStepID": "Trade.Process",
+      "activityId": "1EQ-01",
+      "activityType": "TRADE",
+      "activityDescription": "Equity Trade Processing",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T01:30:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "EQUITIES"
+    },
+    {
+      "id": {
+        "timestamp": 1763643978,
+        "date": "2025-11-20T13:06:18.000+00:00"
+      },
+      "appId": "1EQ",
+      "businessStepID": "Data.Export",
+      "activityId": "1EQ-02",
+      "activityType": "DATA",
+      "activityDescription": "Equity Data Export",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T01:45:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "EQUITIES"
+    },
+    {
+      "id": {
+        "timestamp": 1763643979,
+        "date": "2025-11-20T13:06:19.000+00:00"
+      },
+      "appId": "2EQ",
+      "businessStepID": "Kessel.Feed",
+      "activityId": "2EQ-01",
+      "activityType": "KESSEL_FEED",
+      "activityDescription": "Kessel Feed Processing",
+      "activityStatus": "COMPLETED",
+      "businessDate": "2025-11-16",
+      "reportingTime": "2025-11-16T01:15:00Z",
+      "runId": "001",
+      "slaStatus": "SLA_SUCCESS",
+      "businessArea": "EQUITIES"
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "activities": [
+    {
+      "id": {
+        "timestamp": 1763479237,
+        "date": "2025-11-18T15:20:37.000+00:00"
+      },
+      "activityId": "1COM-01",
+      "expectedStartTime": "9:00 PM",
+      "expectedEndTime": "10:30 PM",
+      "businessArea": "COMMS",
+      "activityName": "EOD Trade Snapshot (T-1)",
+      "appId": "1COM",
+      "businessStepID": "Trade.PD",
+      "slaTimeOffset": "T-1",
+      "activityType": "TRADE",
+      "parsedExpectedEndTime": "22:30:00",
+      "parsedExpectedStartTime": "21:00:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479238,
+        "date": "2025-11-18T15:20:38.000+00:00"
+      },
+      "activityId": "1COM-02",
+      "expectedStartTime": "10:30 PM",
+      "expectedEndTime": "11:00 PM",
+      "businessArea": "COMMS",
+      "activityName": "Risk Calculation",
+      "appId": "1COM",
+      "businessStepID": "Risk.Calc",
+      "slaTimeOffset": "T",
+      "activityType": "RISK",
+      "parsedExpectedEndTime": "23:00:00",
+      "parsedExpectedStartTime": "22:30:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479239,
+        "date": "2025-11-18T15:20:39.000+00:00"
+      },
+      "activityId": "2COM-01",
+      "expectedStartTime": "8:00 PM",
+      "expectedEndTime": "9:00 PM",
+      "businessArea": "COMMS",
+      "activityName": "Market Data Feed",
+      "appId": "2COM",
+      "businessStepID": "Market.Feed",
+      "slaTimeOffset": "T-1",
+      "activityType": "MARKET_DATA",
+      "parsedExpectedEndTime": "21:00:00",
+      "parsedExpectedStartTime": "20:00:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479240,
+        "date": "2025-11-18T15:20:40.000+00:00"
+      },
+      "activityId": "1FX-01",
+      "expectedStartTime": "7:00 PM",
+      "expectedEndTime": "8:30 PM",
+      "businessArea": "FX",
+      "activityName": "FX Trade Processing",
+      "appId": "1FX",
+      "businessStepID": "Trade.Process",
+      "slaTimeOffset": "T",
+      "activityType": "TRADE",
+      "parsedExpectedEndTime": "20:30:00",
+      "parsedExpectedStartTime": "19:00:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479241,
+        "date": "2025-11-18T15:20:41.000+00:00"
+      },
+      "activityId": "1FX-02",
+      "expectedStartTime": "8:30 PM",
+      "expectedEndTime": "9:30 PM",
+      "businessArea": "FX",
+      "activityName": "FX PnL Calculation",
+      "appId": "1FX",
+      "businessStepID": "PnL.Calc",
+      "slaTimeOffset": "T",
+      "activityType": "PNL",
+      "parsedExpectedEndTime": "21:30:00",
+      "parsedExpectedStartTime": "20:30:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479242,
+        "date": "2025-11-18T15:20:42.000+00:00"
+      },
+      "activityId": "2FX-01",
+      "expectedStartTime": "6:00 PM",
+      "expectedEndTime": "7:00 PM",
+      "businessArea": "FX",
+      "activityName": "FX Price Feed",
+      "appId": "2FX",
+      "businessStepID": "Price.Feed",
+      "slaTimeOffset": "T-1",
+      "activityType": "PRICE",
+      "parsedExpectedEndTime": "19:00:00",
+      "parsedExpectedStartTime": "18:00:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479243,
+        "date": "2025-11-18T15:20:43.000+00:00"
+      },
+      "activityId": "1RATES-01",
+      "expectedStartTime": "5:00 PM",
+      "expectedEndTime": "6:30 PM",
+      "businessArea": "RATES",
+      "activityName": "Rates Trade Snapshot",
+      "appId": "1RATES",
+      "businessStepID": "Trade.Snap",
+      "slaTimeOffset": "T",
+      "activityType": "TRADE",
+      "parsedExpectedEndTime": "18:30:00",
+      "parsedExpectedStartTime": "17:00:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479244,
+        "date": "2025-11-18T15:20:44.000+00:00"
+      },
+      "activityId": "1RATES-02",
+      "expectedStartTime": "6:30 PM",
+      "expectedEndTime": "8:00 PM",
+      "businessArea": "RATES",
+      "activityName": "Rates Position Update",
+      "appId": "1RATES",
+      "businessStepID": "Position.Update",
+      "slaTimeOffset": "T",
+      "activityType": "POSITION",
+      "parsedExpectedEndTime": "20:00:00",
+      "parsedExpectedStartTime": "18:30:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479245,
+        "date": "2025-11-18T15:20:45.000+00:00"
+      },
+      "activityId": "1EQ-01",
+      "expectedStartTime": "4:00 PM",
+      "expectedEndTime": "5:00 PM",
+      "businessArea": "EQUITIES",
+      "activityName": "Equity Trade Processing",
+      "appId": "1EQ",
+      "businessStepID": "Trade.Process",
+      "slaTimeOffset": "T",
+      "activityType": "TRADE",
+      "parsedExpectedEndTime": "17:00:00",
+      "parsedExpectedStartTime": "16:00:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479246,
+        "date": "2025-11-18T15:20:46.000+00:00"
+      },
+      "activityId": "1EQ-02",
+      "expectedStartTime": "5:00 PM",
+      "expectedEndTime": "6:00 PM",
+      "businessArea": "EQUITIES",
+      "activityName": "Equity Data Export",
+      "appId": "1EQ",
+      "businessStepID": "Data.Export",
+      "slaTimeOffset": "T",
+      "activityType": "DATA",
+      "parsedExpectedEndTime": "18:00:00",
+      "parsedExpectedStartTime": "17:00:00"
+    },
+    {
+      "id": {
+        "timestamp": 1763479247,
+        "date": "2025-11-18T15:20:47.000+00:00"
+      },
+      "activityId": "2EQ-01",
+      "expectedStartTime": "3:00 PM",
+      "expectedEndTime": "4:00 PM",
+      "businessArea": "EQUITIES",
+      "activityName": "Kessel Feed Processing",
+      "appId": "2EQ",
+      "businessStepID": "Kessel.Feed",
+      "slaTimeOffset": "T-1",
+      "activityType": "KESSEL_FEED",
+      "parsedExpectedEndTime": "16:00:00",
+      "parsedExpectedStartTime": "15:00:00"
+    }
+  ]
+}
