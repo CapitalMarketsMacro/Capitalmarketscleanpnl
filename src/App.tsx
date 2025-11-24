@@ -6,6 +6,7 @@ import { BusinessAreaCard } from './components/BusinessAreaCard';
 import { BusinessAreaAppsView } from './components/BusinessAreaAppsView';
 import { ApplicationView } from './components/ApplicationView';
 import { BusinessAreaDetailGrid } from './components/BusinessAreaDetailGrid';
+import { HistoricalTrendsView } from './components/HistoricalTrendsView';
 import {
   fetchActivityDefinitions,
   fetchActivityStatuses,
@@ -16,7 +17,8 @@ import {
 type ViewState =
   | { type: 'overview' }
   | { type: 'businessArea'; businessArea: string }
-  | { type: 'application'; businessArea: string; appId: string };
+  | { type: 'application'; businessArea: string; appId: string }
+  | { type: 'trends'; businessArea?: string; appId?: string; activityId?: string; activityName?: string };
 
 export default function App() {
   const [definitions, setDefinitions] = useState<ActivityDefinition[]>([]);
@@ -144,6 +146,7 @@ export default function App() {
                   isSelected={selectedBusinessArea === area}
                   onClick={() => setSelectedBusinessArea(area)}
                   onDoubleClick={() => setViewState({ type: 'businessArea', businessArea: area })}
+                  onViewTrends={() => setViewState({ type: 'trends', businessArea: area })}
                 />
               ))}
             </div>
@@ -153,6 +156,17 @@ export default function App() {
                 businessArea={selectedBusinessArea}
                 definitions={definitions}
                 statuses={statuses}
+                onViewAppTrends={(appId) =>
+                  setViewState({ type: 'trends', businessArea: selectedBusinessArea, appId })
+                }
+                onViewActivityTrends={(activityId, activityName) =>
+                  setViewState({
+                    type: 'trends',
+                    businessArea: selectedBusinessArea,
+                    activityId,
+                    activityName,
+                  })
+                }
               />
             )}
           </>
@@ -183,6 +197,26 @@ export default function App() {
             onBack={() =>
               setViewState({ type: 'businessArea', businessArea: viewState.businessArea })
             }
+          />
+        )}
+
+        {viewState.type === 'trends' && (
+          <HistoricalTrendsView
+            businessArea={viewState.businessArea}
+            appId={viewState.appId}
+            activityId={viewState.activityId}
+            activityName={viewState.activityName}
+            onBack={() => {
+              if (viewState.activityId && viewState.appId && viewState.businessArea) {
+                setViewState({ type: 'application', businessArea: viewState.businessArea, appId: viewState.appId });
+              } else if (viewState.appId && viewState.businessArea) {
+                setViewState({ type: 'businessArea', businessArea: viewState.businessArea });
+              } else if (viewState.businessArea) {
+                setViewState({ type: 'overview' });
+              } else {
+                setViewState({ type: 'overview' });
+              }
+            }}
           />
         )}
       </div>

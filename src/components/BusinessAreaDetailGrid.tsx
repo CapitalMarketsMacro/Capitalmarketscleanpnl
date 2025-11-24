@@ -1,4 +1,4 @@
-import { Activity, CheckCircle2, PlayCircle, AlertTriangle, XCircle } from 'lucide-react';
+import { Activity, CheckCircle2, PlayCircle, AlertTriangle, XCircle, BarChart3 } from 'lucide-react';
 import { ActivityDefinition, ActivityStatus } from '../services/mockApi';
 import { Badge } from './ui/badge';
 
@@ -6,12 +6,16 @@ interface BusinessAreaDetailGridProps {
   businessArea: string;
   definitions: ActivityDefinition[];
   statuses: ActivityStatus[];
+  onViewAppTrends?: (appId: string) => void;
+  onViewActivityTrends?: (activityId: string, activityName: string) => void;
 }
 
 export function BusinessAreaDetailGrid({
   businessArea,
   definitions,
   statuses,
+  onViewAppTrends,
+  onViewActivityTrends,
 }: BusinessAreaDetailGridProps) {
   // Get all apps for this business area
   const businessAreaDefs = definitions.filter((def) => def.businessArea === businessArea);
@@ -98,6 +102,12 @@ export function BusinessAreaDetailGrid({
                           <span className="text-sm text-card-foreground">{violationCount}</span>
                         </div>
                       )}
+                      {onViewAppTrends && (
+                        <div className="flex items-center gap-1 cursor-pointer" onClick={() => onViewAppTrends(appId)}>
+                          <BarChart3 className="size-4 text-blue-600 dark:text-blue-500" />
+                          <span className="text-sm text-card-foreground">Trends</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -155,6 +165,12 @@ export function BusinessAreaDetailGrid({
                                 <Badge variant={status.activityStatus === 'RUNNING' ? 'default' : 'secondary'} className="text-xs">
                                   {status.activityStatus}
                                 </Badge>
+                              </div>
+                            )}
+                            {onViewActivityTrends && (
+                              <div className="flex items-center justify-between text-xs pt-1 border-t border-border cursor-pointer" onClick={() => onViewActivityTrends(activity.activityId, activity.activityName)}>
+                                <span className="text-muted-foreground">Trends:</span>
+                                <BarChart3 className="size-4 text-blue-600 dark:text-blue-500" />
                               </div>
                             )}
                           </div>

@@ -1,4 +1,4 @@
-import { TrendingUp, AlertTriangle, CheckCircle2, Activity } from 'lucide-react';
+import { TrendingUp, AlertTriangle, CheckCircle2, Activity, BarChart3 } from 'lucide-react';
 import { ActivityDefinition, ActivityStatus } from '../services/mockApi';
 
 interface BusinessAreaCardProps {
@@ -7,6 +7,7 @@ interface BusinessAreaCardProps {
   statuses: ActivityStatus[];
   onClick: () => void;
   onDoubleClick: () => void;
+  onViewTrends: () => void;
   isSelected: boolean;
 }
 
@@ -21,6 +22,7 @@ export function BusinessAreaCard({
   statuses,
   onClick,
   onDoubleClick,
+  onViewTrends,
   isSelected,
 }: BusinessAreaCardProps) {
   const areaActivities = definitions.filter((def) => def.businessArea === businessArea);
@@ -101,6 +103,17 @@ export function BusinessAreaCard({
           </div>
         )}
       </div>
+
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onViewTrends();
+        }}
+        className="mt-3 w-full flex items-center justify-center gap-2 px-3 py-2 bg-primary/10 hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 text-primary rounded-md transition-colors text-sm"
+      >
+        <BarChart3 className="size-4" />
+        View Trends
+      </button>
     </div>
   );
 }

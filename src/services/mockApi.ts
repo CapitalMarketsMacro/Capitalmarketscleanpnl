@@ -1,21 +1,3 @@
-export interface ActivityDefinition {
-  id: {
-    timestamp: number;
-    date: string;
-  };
-  activityId: string;
-  expectedStartTime: string;
-  expectedEndTime: string;
-  businessArea: string;
-  activityName: string;
-  appId: string;
-  businessStepID: string;
-  slaTimeOffset: string;
-  activityType: string;
-  parsedExpectedEndTime: string;
-  parsedExpectedStartTime: string;
-}
-
 export interface ActivityStatus {
   id: {
     timestamp: number;
@@ -32,6 +14,14 @@ export interface ActivityStatus {
   runId: string;
   slaStatus: 'SLA_SUCCESS' | 'SLA_VIOLATION_MISSED_WINDOW' | 'SLA_VIOLATION_DUPLICATION';
   businessArea: string;
+}
+
+export interface HistoricalTrendData {
+  date: string;
+  success: number;
+  violations: number;
+  running: number;
+  total: number;
 }
 
 // Mock data - you can update this directly in the code or load from an external source
@@ -449,4 +439,77 @@ export const fetchActivityStatuses = async (): Promise<ActivityStatus[]> => {
   }
   
   return mockActivityStatuses;
+};
+
+// Generate historical trend data for last 30 days
+export const fetchHistoricalTrends = async (
+  businessArea?: string,
+  appId?: string,
+  activityId?: string
+): Promise<HistoricalTrendData[]> => {
+  await new Promise(resolve => setTimeout(resolve, 300));
+
+  const days = 30;
+  const endDate = new Date('2025-11-16');
+  const trends: HistoricalTrendData[] = [];
+
+  for (let i = days - 1; i >= 0; i--) {
+    const date = new Date(endDate);
+    date.setDate(date.getDate() - i);
+    const dateStr = date.toISOString().split('T')[0];
+
+    // Generate realistic trend data with patterns
+    let baseSuccess = 8;
+    let baseViolations = 1;
+    let baseRunning = 1;
+
+    // Add some patterns - weekends have fewer activities
+    const dayOfWeek = date.getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      baseSuccess = Math.floor(baseSuccess * 0.6);
+      baseViolations = 0;
+      baseRunning = 0;
+    }
+
+    // Simulate issues in COMMS and RATES business areas
+    if (businessArea === 'COMMS') {
+      // COMMS has more violations recently
+      if (i < 10) {
+        baseViolations = Math.floor(Math.random() * 2) + 1;
+        baseSuccess = Math.max(5, baseSuccess - baseViolations);
+      }
+    } else if (businessArea === 'RATES') {
+      // RATES had issues mid-period
+      if (i >= 10 && i < 20) {
+        baseViolations = Math.floor(Math.random() * 3) + 1;
+        baseSuccess = Math.max(4, baseSuccess - baseViolations);
+      }
+    }
+
+    // Adjust based on specific app or activity
+    if (appId) {
+      baseSuccess = Math.floor(baseSuccess * 0.3);
+      baseViolations = Math.floor(baseViolations * 0.5);
+      baseRunning = Math.floor(baseRunning * 0.3);
+    }
+
+    if (activityId) {
+      // Single activity - binary success/failure
+      baseSuccess = Math.random() > 0.2 ? 1 : 0;
+      baseViolations = baseSuccess === 0 ? 1 : 0;
+      baseRunning = 0;
+    }
+
+    const total = baseSuccess + baseViolations + baseRunning;
+
+    trends.push({
+      date: dateStr,
+      success: baseSuccess,
+      violations: baseViolations,
+      running: baseRunning,
+      total,
+    });
+  }
+
+  return trends;
 };
